@@ -419,7 +419,7 @@ class Pay extends Component{
         }
         return(
             <div className="modal" ref="modal" role="dialog">
-                <div className="modal-dialog">
+                <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={()=>{
