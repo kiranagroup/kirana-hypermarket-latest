@@ -29,21 +29,29 @@ export default class CartProducts extends Component{
                     {this.props.markedItems.map((element)=>{
                         return(
                             <div className="col-12 col-sm-12 cartProducts row" key={element.Product['Product ID']}>
-                                <div className="col-3 col-sm-3 imgparent">
-                                    <img src={element.Product['Pic URL']  || require('../../images/dfbg.png')} alt={element.Product.Brand}/>
+                                <div className="col-2 col-sm-2 imgparent">
+                                    <img src={element.Product['Pic URL']  || require('../../images/dfbg.png')} alt=''/>
                                 </div>
-                                <div className="col-8 col-sm-8">
+                                <div className="col-5 col-sm-5">
                                     <h6 className="cartProductHeading">{element.Product.Description}</h6>
                                     <p className="cartProductDesc">{element.Product.Brand}</p>
                                     <p className="cartProductDesc">{element.Product.Cluster}</p>
+                                    <p className="cartProductDesc">{element.Product.Weight}</p>
                                 </div>
                                 <div className="col-1 col-sm-1 nopad cartOps">
-                                    <p className="nomarg"><i className="fa fa-trash" aria-hidden="true" onClick={this.removeFromCart.bind(this,element)}></i></p>
                                     <div className="incdec">
                                         <p className="nomarg"><i className="fa fa-chevron-up" aria-hidden="true" onClick={this.incProduct.bind(this,element.Product)}></i></p>
                                         <p className="nomarg value"><span className="floating">{element.value}</span></p>
                                         <p className="nomarg"><i className="fa fa-chevron-down" aria-hidden="true" onClick={this.decProduct.bind(this,element.Product)}></i></p>
                                     </div>
+                                </div>
+                                <div className="col-3 col-sm-3">
+                                <p className="cartProductDesc">MRP : {element.Product.Price}</p>
+                                <hr className="editline"/>
+                                <p className="cartProductDesc">Subtotal : {parseInt(element.Product.Price.substring(1,element.Product.Price.length))*element.value}</p>
+                                </div>
+                                <div className="col-1 col-sm-1 del">
+                                <p className="nomarg"><i className="fa fa-trash" aria-hidden="true" onClick={this.removeFromCart.bind(this,element)}></i></p>
                                 </div>
                             </div>
                         )    

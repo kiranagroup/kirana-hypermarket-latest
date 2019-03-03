@@ -1,10 +1,10 @@
 div.cartBox{
-    width: 300px;
+    width: 500px;
     position: absolute;
     max-height: 400px;
     min-height: 130px;
     overflow-y: scroll;
-    transform: translate(-70%);
+    transform: translate(-80%);
     background: rgb(255,255,255);
     z-index:9999999;
     margin-top: 10%;
@@ -94,6 +94,19 @@ div.nopad{
 div.cartOps{
     padding: 0;
     text-align: left;
+    padding-top: 4% !important;
+}
+
+div.col-1.del{
+    margin-top: 7%;
+}
+
+hr.editline{
+    border-top: 2px dotted rgba(0,0,0,0.5) !important; 
+}
+
+div.col-1.del i{
+    font-size:22px;
 }
 
 div.cartTotal{
