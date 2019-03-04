@@ -9,6 +9,7 @@ export const CartPayButton = (props) =>{
     return(
         <React.Fragment>
             <button onClick={()=>{
+                // alert("clicked");
                 Store.dispatch({'type':'pay','payLoad':true});
             }} className={clas}>Pay</button>
         </React.Fragment>

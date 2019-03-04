@@ -12,7 +12,8 @@ const mapStateToProps = state => {
 		searchField: state.searchProducts.searchField,
 		searchResults: state.requestProductsOnSearch.searchProductResults,
 		isPending: state.requestProductsOnSearch.isPending,
-		error: state.requestProductsOnSearch.error	
+		error: state.requestProductsOnSearch.error	,
+		payment: state.Reducer.payStart
 	}
 }
 const mapDispatchToProps = dispatch =>{
@@ -100,6 +101,9 @@ class SearchRes extends Component {
     }
 
 	componentDidMount(){
+		if(this.props.payment){
+			this.props.history.push('/payment');
+		}
     	if(Object.keys(this.props.searchResults).length === 0){
 			// this.props.requestSearchResults(this.esClient, this.searchBody());	
 			this.props.history.push('/');
@@ -126,7 +130,7 @@ class SearchRes extends Component {
 
 
     render(){
-
+		// console.log("search res "+JSON.stringify(this.props.searchResults));
 		const {match, searchResults} = this.props;
 		// return <div />
         while(!this.gotData && !this.gotError){
@@ -143,15 +147,15 @@ class SearchRes extends Component {
                 </div>
             )
         }
-        if(this.state.count<this.products.length){
-            var show= <div className="centerIt">       
-            <button className="btn" onClick={()=>{this.setState({'count':this.state.count+50});
-        }}> <b> Show More </b> </button>
-        </div>
-        }
-        else{
-            var show = <h4 className="centerIt mbott">That's all, Thank You.</h4>;
-        }
+        // if(this.state.count<this.products.length){
+        //     var show= <div className="centerIt">       
+        //     <button className="btn" onClick={()=>{this.setState({'count':this.state.count+50});
+        // }}> <b> Show More </b> </button>
+        // </div>
+        // }
+        // else{
+        //     var show = <h4 className="centerIt mbott">That's all, Thank You.</h4>;
+        // }
         return(
             <div className="row">
             {/* <div className="col-lg-2 col-md-2" style={{padding:'0 0 0 2px'}}>
@@ -159,7 +163,7 @@ class SearchRes extends Component {
             </div> */}
             <div className="col-lg-12 col-md-12">
                 <SearchProduct items={this.state.products} counter={this.state.count}></SearchProduct>
-                {show}
+                {/* {show} */}
             </div>
             </div>
         )

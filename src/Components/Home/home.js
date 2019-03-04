@@ -29,8 +29,9 @@ export const Home = () =>{
             }></Route>
           <Route path="/product/:category" exact 
         component={Products}></Route>
+        <Route path="/payment" component={Payment}></Route>
           <Route path="/search/q:query/:type?" exact component={SearchRes}></Route>
-          <Route path="/payment" component={Payment}></Route>
+          
 
 
            { <Route render={()=><h1>NO PAGE EXIST </h1>}/> }

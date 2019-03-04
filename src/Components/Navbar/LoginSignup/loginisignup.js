@@ -216,7 +216,7 @@ class LoginSignup extends Component {
                 message = <i class="fa fa-user-circle-o" aria-hidden="true" style={{ cursor: 'pointer' }} onClick={this.showModal}></i>
         } else if(user){
             if(this.props.screen > 576)
-                message = <h5>Hello, {user.firstName} <span onClick={this.logout}>Logout</span> </h5>
+                message = <h5><i class="fa fa-user-circle" aria-hidden="true"></i> {user.firstName} &nbsp;&nbsp;&nbsp;<span onClick={this.logout}>Logout</span> </h5>
             else
                 message = <span className="user-icon" onClick={this.logout}>{user.firstName[0] + user.lastName[0]}</span>
         }
