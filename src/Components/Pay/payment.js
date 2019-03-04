@@ -11,9 +11,11 @@ class Payment extends Component{
         this.totalAmount=0;
     }
     componentDidMount(){
+        // console.log(this.props.products);
         if(this.props.products){
             for(let i=0;i<this.props.products.length;i++){
                 this.totalAmount+=this.props.products[i].value*this.props.products[i].Product.Price.split('₹')[1];
+                this.setState({});
             }
         }
     }

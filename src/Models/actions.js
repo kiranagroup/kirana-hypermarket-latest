@@ -16,6 +16,7 @@ export const requestProducts = (esClient, searchBody) =>{
 	esClient.search({index: 'website', body: searchBody})
 	.then(data => {
 		if(data){
+			// console.log("es data"+JSON.stringify(data));
 			Store.dispatch({
 				type: REQUEST_PRODUCTS_SUCCESS,
 				payload: data

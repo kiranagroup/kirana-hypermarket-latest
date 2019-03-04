@@ -45,9 +45,13 @@ div.h12{
 }
 
 div.lsIt div h5{
-    cursor: pointer;
+    /* cursor: pointer; */
     width: fit-content;
     margin: 0 auto;
+}
+
+div.lsIt div h5 span{
+    cursor: pointer;
 }
 
 div.lsIt div i{

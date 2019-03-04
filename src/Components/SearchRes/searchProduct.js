@@ -22,9 +22,9 @@ class SearchProduct extends Component{
         return(
             <div className="row">
                 {this.props.items.map(Obj=>{
-                    if(this.countCheck===this.props.counter){
-                        return;
-                    }
+                    // if(this.countCheck===this.props.counter){
+                    //     return;
+                    // }
                     var button = <Add Obj={Obj._source} changed={this.refresh.bind(this)}></Add>;
                     if(this.props.added){
                     for(var i=0;i<this.props.added.length;i++){
@@ -33,7 +33,7 @@ class SearchProduct extends Component{
                             }
                         }
                     }
-                    this.countCheck++;
+                    // this.countCheck++;
                     return(
                         <div  className="col-lg-3 col-md-4 col-sm-6 col-6">
                             <div className="box prod">
