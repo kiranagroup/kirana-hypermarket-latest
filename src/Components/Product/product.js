@@ -65,7 +65,7 @@ class Product extends Component{
                                     <p className="extra">{this.TitleCase(Obj.Description)}</p>
                                     <p className="gcol">{Obj.Weight || 'Quantity'}</p>
                                     <div className="row last">
-                                        <p className="col-sm-4 col-4 highlight">{Obj.Price || 'MRP'}</p>
+                                        <p className="col-sm-4 col-4 highlight">&#8377;{Obj.Price || 'MRP'}</p>
                                         <div className="col-sm-8 col-8 rightIt">
                                             {button}
                                         </div>

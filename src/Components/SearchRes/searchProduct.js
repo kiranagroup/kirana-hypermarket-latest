@@ -5,6 +5,7 @@ import Add from '../Product/Add';
 // import {Store} <f></f>rom '../../Models/Store';
 import Counter from '../Product/Counter';
 import {connect} from 'react-redux';
+import Pay from '../Pay/pay';
 
 class SearchProduct extends Component{
     constructor(props){
@@ -20,6 +21,8 @@ class SearchProduct extends Component{
     render(){
         this.countCheck=0;
         return(
+            <div>
+                <Pay></Pay>
             <div className="row">
                 {this.props.items.map(Obj=>{
                     // if(this.countCheck===this.props.counter){
@@ -45,7 +48,7 @@ class SearchProduct extends Component{
                                     <p className="extra">{Obj._source.Description}</p>
                                     <p className="gcol">{Obj._source.Weight || 'Quantity'}</p>
                                     <div className="row last">
-                                        <p className="col-sm-4 col-4 highlight">{Obj._source.Price || 'MRP'}</p>
+                                        <p className="col-sm-4 col-4 highlight">&#8377;{Obj._source.Price || 'MRP'}</p>
                                         <div className="col-sm-8 col-8 rightIt">
                                             {button}
                                         </div>
@@ -58,6 +61,7 @@ class SearchProduct extends Component{
 
                 })}
             </div>
+            </div>
         )
     }
 }
@@ -69,6 +73,8 @@ const mapStateToProps=(state)=>{
             curr=state.Reducer.current;
         }
         let add = state.Reducer.added;
+        let currPage = state.Reducer.paystart;
+        console.log(currPage);
         return {added:add,current:curr};
     }
     return {};

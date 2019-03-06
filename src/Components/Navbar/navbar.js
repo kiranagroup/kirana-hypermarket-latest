@@ -49,14 +49,15 @@ class Navbar extends Component{
 
             {/* For Logo and ShopName */}
             <div className="col-sm-3 col-12 row outside">
-                <div className="col-sm-6 col-2 imgIt ibIt rightIt">
-                    <a href="/">
+                {/* <div className="col-sm-6 col-2 imgIt ibIt rightIt"> */}
+                    {/* <a href="/">
                         <img src={icon} alt="Logo"/>
                     </a>
-                </div>
-                <div className="col-sm-6 col-8 ibIt">
+                </div> */}
+                <div className="col-sm-12 col-12 ibIt centerIt">
                     <div className="design">
                         <h4>Village HyperMarket</h4>
+                        <p>Marathalli, Bengaluru</p>
                     </div>
                 </div>
                 {(window.innerWidth<576) ? (

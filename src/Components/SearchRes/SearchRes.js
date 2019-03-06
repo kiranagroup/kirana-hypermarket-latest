@@ -155,13 +155,17 @@ class SearchRes extends Component {
         // }
         // else{
         //     var show = <h4 className="centerIt mbott">That's all, Thank You.</h4>;
-        // }
+		// }
+		console.log(this.state.products);
+		if(this.state.products){
+			this.category = this.state.products[0]._source.Cluster;
+		}
         return(
             <div className="row">
-            {/* <div className="col-lg-2 col-md-2" style={{padding:'0 0 0 2px'}}>
+            <div className="col-lg-2 col-md-2" style={{padding:'0 0 0 2px'}}>
             <Pane category={this.category}></Pane>
-            </div> */}
-            <div className="col-lg-12 col-md-12">
+            </div>
+            <div className="col-lg-10 col-md-10">
                 <SearchProduct items={this.state.products} counter={this.state.count}></SearchProduct>
                 {/* {show} */}
             </div>
