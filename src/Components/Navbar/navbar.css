@@ -8,7 +8,10 @@ div.imgIt img{
 }
 
 div.design h4{
-    transform: translate(0,15%);
+    transform: translate(0,50%);
+}
+div.design p{
+    transform: translate(0,25%) !important; 
 }
 
 div.ibIt{

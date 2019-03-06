@@ -46,9 +46,9 @@ export default class CartProducts extends Component{
                                     </div>
                                 </div>
                                 <div className="col-3 col-sm-3">
-                                <p className="cartProductDesc">MRP : {element.Product.Price}</p>
+                                <p className="cartProductDesc">MRP : &#8377;{element.Product.Price}</p>
                                 <hr className="editline"/>
-                                <p className="cartProductDesc">Subtotal : {parseInt(element.Product.Price.substring(1,element.Product.Price.length))*element.value}</p>
+                                <p className="cartProductDesc">Subtotal : &#8377;{element.Product.Price*element.value}</p>
                                 </div>
                                 <div className="col-1 col-sm-1 del">
                                 <p className="nomarg"><i className="fa fa-trash" aria-hidden="true" onClick={this.removeFromCart.bind(this,element)}></i></p>

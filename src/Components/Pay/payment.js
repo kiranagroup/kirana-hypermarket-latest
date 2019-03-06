@@ -14,7 +14,7 @@ class Payment extends Component{
         // console.log(this.props.products);
         if(this.props.products){
             for(let i=0;i<this.props.products.length;i++){
-                this.totalAmount+=this.props.products[i].value*this.props.products[i].Product.Price.split('₹')[1];
+                this.totalAmount+=this.props.products[i].value*this.props.products[i].Product.Price;
                 this.setState({});
             }
         }
@@ -62,7 +62,7 @@ class Payment extends Component{
                                 <h6>{element.Product.Description}</h6>    
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>{element.Product.Price}</h6>
+                                <h6>&#8377;{element.Product.Price}</h6>
                             </div>
                             <div className="col-4 col-sm-4 itemtab linemid">
                                 <button className="dec" onClick={()=>{
@@ -74,7 +74,7 @@ class Payment extends Component{
                                 }}>+</button>
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>₹{element.value * element.Product.Price.split('₹')[1]}</h6>
+                                <h6>₹{element.value * element.Product.Price}</h6>
                             </div>
                             </div>
                         )
@@ -109,7 +109,7 @@ class Payment extends Component{
                                 <b>Total</b>
                             </div>
                             <div className="col-4 col-sm-4">
-                                <b>₹ {this.totalAmount}</b>
+                                <b>₹{this.totalAmount}</b>
                             </div>
                         </div>
                     </div>
