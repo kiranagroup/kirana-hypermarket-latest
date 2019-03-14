@@ -1,0 +1,30 @@
+nav{
+    background: rgba(0,0,0,1);
+    padding: 0% 2% !important;
+}
+
+nav a.navbar-brand{
+    width: 10%;
+    padding: 0 !important;
+    height: 100% !important;
+}
+
+nav a.navbar-brand img{
+    width: 30%;
+}
+
+nav li a{
+    color: white !important;
+}
+
+nav li a.dropdown-item{
+    color: black !important;
+}
+
+nav .active{
+    background: #6A00FF !important;
+}
+
+nav .dropdown-menu{
+    margin-top:  0 !important;
+}

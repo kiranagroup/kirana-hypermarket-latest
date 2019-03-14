@@ -3,6 +3,9 @@ import './panes.css';
 import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 import {connect} from 'react-redux';
 import {Store} from '../../../Models/Store';
+import elasticsearch from 'elasticsearch';
+import {reqCollectionQueryBody, searchPaneQueryBody} from '../../../assets/functions';
+import {elasticconfig} from '../../../assets/service-act.js'
 
 class Category extends Component{
     constructor(){
@@ -12,8 +15,33 @@ class Category extends Component{
         // this.brand=[];
         this.currentShow=4;
         this.cat=[];
+        this.state={
+            reqProcessing: true,
+            reqResponse: {}
+        }
     }
+
+    esClient = new elasticsearch.Client({
+        host: elasticconfig.host,
+        httpAuth: elasticconfig.httpAuth,
+        log: 'error'
+    });
+
+    componentWillMount(){
+        this.requestCollections(this.esClient);
+    }
+
+    requestCollections = () =>{
+        this.esClient.search({index: 'website', body: reqCollectionQueryBody})
+        .then(results => {
+            console.log(results);
+            this.setState({reqResponse: results, reqProcessing: false})
+        })
+        .catch(err => {console.log(err);})
+    }
+    
     componentDidMount(){
+        this.requestCollections(this.esClient);
         fetch('https://raw.githubusercontent.com/kiranagroup/CartWebsite/master/src/assets/completeResponseFrom_requestCollection')
         .then(response=>{
             response.json()
