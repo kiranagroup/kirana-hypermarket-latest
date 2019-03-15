@@ -7,6 +7,7 @@ import Searchbar from './Searchbar/searchbar';
 import './navbar.css';
 import Count from '../Cart/count';
 import Cart from '../Cart/cart';
+import Category from './Category/category';
 // import {connect} from 'react-redux';
 import {Store} from '../../Models/Store';
 
@@ -45,6 +46,7 @@ class Navbar extends Component{
     render(){
         window.addEventListener('resize',this.changeIcons.bind(this));
         return(
+            <div>
             <div className="row nav">
 
             {/* For Logo and ShopName */}
@@ -98,7 +100,8 @@ class Navbar extends Component{
             {this.cart}
             </div>
 
-
+            </div>
+            <Category></Category>
             </div>
         )
     }
