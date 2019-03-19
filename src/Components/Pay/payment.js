@@ -1,9 +1,12 @@
 import React,{Component} from 'react';
 import { Store } from '../../Models/Store';
 import { connect } from 'react-redux';
+import firebase from '../../assets/firebase_config';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './pay.css';
 import '../../../node_modules/font-awesome/css/font-awesome.min.css';
+
+const shopId = 'MB18S6aaMpeDBDaFYdqOFwHldb82';
 
 class Payment extends Component{
     constructor(){
@@ -14,11 +17,44 @@ class Payment extends Component{
         // console.log(this.props.products);
         if(this.props.products){
             for(let i=0;i<this.props.products.length;i++){
-                this.totalAmount+=this.props.products[i].value*this.props.products[i].Product.Price;
+                this.totalAmount+=parseInt(this.props.products[i].value)*parseInt(this.props.products[i].Product.Price.substring(1));
                 this.setState({});
             }
         }
     }
+    placeOrder() {
+			const {products} = this.props;
+			const total = this.totalAmount;
+			const {uid} = firebase.auth().currentUser;
+			const {key} = firebase.database().ref('shopOrders').child(shopId).push();
+			const shopRef = firebase.database().ref();
+			const userRef = firebase.database().ref();
+			const updateData = {};
+			updateData[`shopOrder/${shopId}/${key}`] = {
+				details: products,
+				total: total,
+				sid: shopId,
+				uid: uid,
+				status: 'Placed',
+				placedOn: Date.now()
+			};
+			updateData[`userOrder/${uid}/${key}`] = {
+				sid: shopId,
+				uid: uid,
+				total: total,
+				status: 'Placed',
+				placedOn: Date.now()
+			};
+
+			firebase.database().ref().update(updateData, error => {
+				if(error) {
+					console.log(error);
+				} else {
+					console.log('Order Successfully Placed');
+				}
+			});
+    }
+
     render(){
         if(!this.props.total){
             return(
@@ -62,7 +98,7 @@ class Payment extends Component{
                                 <h6>{element.Product.Description}</h6>    
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>&#8377;{element.Product.Price}</h6>
+                                <h6>{element.Product.Price}</h6>
                             </div>
                             <div className="col-4 col-sm-4 itemtab linemid">
                                 <button className="dec" onClick={()=>{
@@ -74,7 +110,7 @@ class Payment extends Component{
                                 }}>+</button>
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>₹{element.value * element.Product.Price}</h6>
+                                    <h6>₹{parseInt(element.value) * parseInt(element.Product.Price.substring(1))}</h6>
                             </div>
                             </div>
                         )
@@ -89,7 +125,7 @@ class Payment extends Component{
                                 <button className='lastbtn short' onClick={()=>{
                                     Store.dispatch({'type':'removeAll'});
                                 }}> <b>Clear All</b> </button>   
-                                <button className='lastbtn2'> <b>Checkout <i className="fa fa-caret-right" aria-hidden="true"></i></b> </button>
+                                <button className='lastbtn2' onClick={this.placeOrder.bind(this)}> <b>Checkout <i className="fa fa-caret-right" aria-hidden="true"></i></b> </button>
                         </div>
                         <div className="col-5 col-sm-5 lasttab row">
                             <div className="col-8 col-sm-8">
