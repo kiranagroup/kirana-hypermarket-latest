@@ -87,7 +87,7 @@ export const Reducer = (state=initState,action) =>{
         if(state.count){
             state.count=0;
         }
-        return {...state};
+        return {...state, address: null};
     }
 // To remove a product from cart
     else if(action.type==='remove'){
@@ -219,6 +219,12 @@ export const Reducer = (state=initState,action) =>{
         else{
             state={...state,'pane':'found'};
         }
+        return {...state};
+    } else if(action.type === 'set_address'){
+        state = {
+            ...state,
+            'address': action.payLoad
+        };
         return {...state};
     }
 

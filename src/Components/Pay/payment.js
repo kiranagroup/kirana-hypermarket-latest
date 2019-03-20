@@ -8,23 +8,24 @@ import '../../../node_modules/font-awesome/css/font-awesome.min.css';
 
 const shopId = 'MB18S6aaMpeDBDaFYdqOFwHldb82';
 
+const getTotal = that => {
+    let total = 0;
+    if (that.props.products) {
+        for (let i = 0; i < that.props.products.length; i++) {
+            total += parseInt(that.props.products[i].value) * parseInt(that.props.products[i].Product.Price.substring(1));
+        }
+    }
+    return total;
+}
+
 class Payment extends Component{
     constructor(){
         super();
-        this.totalAmount=0;
     }
-    componentDidMount(){
-        // console.log(this.props.products);
-        if(this.props.products){
-            for(let i=0;i<this.props.products.length;i++){
-                this.totalAmount+=parseInt(this.props.products[i].value)*parseInt(this.props.products[i].Product.Price.substring(1));
-                this.setState({});
-            }
-        }
-    }
+
     placeOrder() {
-			const {products} = this.props;
-			const total = this.totalAmount;
+			const {products, address} = this.props;
+            const total = getTotal(this);
 			const {uid} = firebase.auth().currentUser;
 			const {key} = firebase.database().ref('shopOrders').child(shopId).push();
 			const shopRef = firebase.database().ref();
@@ -36,7 +37,8 @@ class Payment extends Component{
 				sid: shopId,
 				uid: uid,
 				status: 'Placed',
-				placedOn: Date.now()
+                placedOn: Date.now(),
+                address: address
 			};
 			updateData[`userOrder/${uid}/${key}`] = {
 				sid: shopId,
@@ -50,12 +52,14 @@ class Payment extends Component{
 				if(error) {
 					console.log(error);
 				} else {
-					console.log('Order Successfully Placed');
+                    console.log('Order Successfully Placed');
+                    Store.dispatch({ 'type': 'removeAll' })
 				}
 			});
     }
 
     render(){
+        let total = getTotal(this);
         if(!this.props.total){
             return(
                 <div className='container centerIt'>
@@ -98,7 +102,7 @@ class Payment extends Component{
                                 <h6>{element.Product.Description}</h6>    
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>{element.Product.Price}</h6>
+                                <h6>₹{element.Product.Price.substring(1)}</h6>
                             </div>
                             <div className="col-4 col-sm-4 itemtab linemid">
                                 <button className="dec" onClick={()=>{
@@ -132,7 +136,7 @@ class Payment extends Component{
                                 Subtotal
                             </div>
                             <div className="col-4 col-sm-4">
-                                <b>₹{this.totalAmount}</b>
+                                <b>₹{total}</b>
                             </div>
                             <div className="col-8 col-sm-8">
                                 Delivery Charges
@@ -145,7 +149,7 @@ class Payment extends Component{
                                 <b>Total</b>
                             </div>
                             <div className="col-4 col-sm-4">
-                                <b>₹{this.totalAmount}</b>
+                                <b>₹{total}</b>
                             </div>
                         </div>
                     </div>
@@ -159,7 +163,8 @@ const mapStateToProps = (state) =>{
     if(state.Reducer.added){
         var product = state.Reducer.added;
         var count = state.Reducer.count;
-        return {products:product,total:count}
+        var address = state.Reducer.address;
+        return {products:product,total:count,address:address}
     }
     return {}
 }
