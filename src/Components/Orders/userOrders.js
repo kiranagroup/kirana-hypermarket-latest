@@ -45,7 +45,6 @@ class UserOrders extends Component {
           Object.keys(snapshot.val()).forEach(orderId => {
             let orderRef = firebase.database().ref(`userOrder/${user.uid}/${orderId}`);
             let fn = orderRef.on('child_changed', snapshot => {
-              console.log('Change in Status');
               if (snapshot.val() !== 'Placed')
                 updateStatus(user.uid, orderId, snapshot.val(), that);
             });
@@ -57,6 +56,15 @@ class UserOrders extends Component {
         this.props.history.replace('/')
       }
     });
+  }
+
+  componentWillUnmount() {
+    let { uid } = firebase.auth().currentUser;
+    let handles = [...this.state.handles];
+    handles.forEach(handle => {
+      firebase.database().ref(`user/${uid}/${handle.orderId}`).off('child_changed', handle.fn);
+    });
+    this.setState({ handles: [] });
   }
 
   render() {
