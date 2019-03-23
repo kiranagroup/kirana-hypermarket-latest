@@ -59,11 +59,13 @@ class UserOrders extends Component {
   }
 
   componentWillUnmount() {
-    let { uid } = firebase.auth().currentUser;
-    let handles = [...this.state.handles];
-    handles.forEach(handle => {
-      firebase.database().ref(`user/${uid}/${handle.orderId}`).off('child_changed', handle.fn);
-    });
+    if(firebase.auth().currentUser) {
+      let { uid } = firebase.auth().currentUser;
+      let handles = [...this.state.handles];
+      handles.forEach(handle => {
+        firebase.database().ref(`user/${uid}/${handle.orderId}`).off('child_changed', handle.fn);
+      });
+    }
     this.setState({ handles: [] });
   }
 
