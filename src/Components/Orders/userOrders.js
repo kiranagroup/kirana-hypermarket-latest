@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Store } from '../../Models/Store';
 import firebase from '../../assets/firebase_config';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const updateStatus = (uid, key, change, that) => {
   let handles = [...that.state.handles];
@@ -77,17 +78,23 @@ class UserOrders extends Component {
     else {
       list = orders.map(order => {
         return (
-          <div key={order.orderId}>
-            <p>{order.orderId}</p>
-            <p>{order.placedOn}</p>
-            <p>{order.status}</p>
-            <p>{order.total}</p>
+          <div class="card col-8 mb-3" key={order.orderId}>
+            <h5 class="card-header">Order ID {order.orderId}</h5>
+            <div class="card-body">
+              <h5 class="card-title">Order Summary</h5>
+              <p class="card-text">
+                <span className="d-block text-center">Placed On - {Date(order.placedOn).toString()}</span>
+                <span className="d-block text-center">Status - {order.status}</span>
+                <span className="d-block text-center">Total Amount - {order.total}</span>
+              </p>
+              <a href="#" class="btn btn-primary">Complete Details</a>
+            </div>
           </div>
         );
       });
     }
     return (
-      <div>
+      <div className="row d-flex justify-content-center">
         {list}
       </div>
     );
