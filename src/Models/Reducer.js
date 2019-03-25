@@ -87,7 +87,7 @@ export const Reducer = (state=initState,action) =>{
         if(state.count){
             state.count=0;
         }
-        return {...state};
+        return {...state, address: null};
     }
 // To remove a product from cart
     else if(action.type==='remove'){
@@ -208,6 +208,10 @@ export const Reducer = (state=initState,action) =>{
             state={...state,'payStart':action.payLoad};
             return {...state};
     }
+    else if(action.type==='pay_done') {
+        state={...state, 'payStart': false}
+        return {...state};
+    }
     else if(action.type==='user_data'){
         state={...state,'user':action.payLoad};
         return {...state};
@@ -219,6 +223,12 @@ export const Reducer = (state=initState,action) =>{
         else{
             state={...state,'pane':'found'};
         }
+        return {...state};
+    } else if(action.type === 'set_address'){
+        state = {
+            ...state,
+            'address': action.payLoad
+        };
         return {...state};
     }
 
