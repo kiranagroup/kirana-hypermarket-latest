@@ -77,13 +77,14 @@ class UserOrders extends Component {
       list = <p>Loading....</p>
     else {
       list = orders.map(order => {
+        let date = new Date(order.placedOn);
         return (
           <div class="card col-8 mb-3" key={order.orderId}>
             <h5 class="card-header">Order ID {order.orderId}</h5>
             <div class="card-body">
               <h5 class="card-title">Order Summary</h5>
               <p class="card-text">
-                <span className="d-block text-center">Placed On - {Date(order.placedOn).toString()}</span>
+                <span className="d-block text-center">Placed On - {date.toUTCString()}</span>
                 <span className="d-block text-center">Status - {order.status}</span>
                 <span className="d-block text-center">Total Amount - {order.total}</span>
               </p>
