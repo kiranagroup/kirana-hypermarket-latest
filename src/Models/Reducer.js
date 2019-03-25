@@ -208,6 +208,10 @@ export const Reducer = (state=initState,action) =>{
             state={...state,'payStart':action.payLoad};
             return {...state};
     }
+    else if(action.type==='pay_done') {
+        state={...state, 'payStart': false}
+        return {...state};
+    }
     else if(action.type==='user_data'){
         state={...state,'user':action.payLoad};
         return {...state};

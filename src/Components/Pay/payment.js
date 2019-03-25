@@ -12,7 +12,7 @@ const getTotal = that => {
     let total = 0;
     if (that.props.products) {
         for (let i = 0; i < that.props.products.length; i++) {
-            total += parseInt(that.props.products[i].value) * parseInt(that.props.products[i].Product.Price.substring(1));
+            total += parseInt(that.props.products[i].value) * parseInt(that.props.products[i].Product.Price);
         }
     }
     return total;
@@ -28,8 +28,6 @@ class Payment extends Component{
             const total = getTotal(this);
 			const {uid} = firebase.auth().currentUser;
 			const {key} = firebase.database().ref('shopOrders').child(shopId).push();
-			const shopRef = firebase.database().ref();
-			const userRef = firebase.database().ref();
 			const updateData = {};
 			updateData[`shopOrder/${shopId}/${key}`] = {
 				details: products,
@@ -53,7 +51,8 @@ class Payment extends Component{
 					console.log(error);
 				} else {
                     console.log('Order Successfully Placed');
-                    Store.dispatch({ 'type': 'removeAll' })
+                    Store.dispatch({ 'type': 'removeAll' });
+                    Store.dispatch({ 'type': 'pay_done' });
 				}
 			});
     }
@@ -65,7 +64,7 @@ class Payment extends Component{
                 <div className='container centerIt'>
                     <h3>Your Cart is empty</h3>
                     <button className='nocartbtn' onClick={()=>{
-                        this.props.history.push('/');
+                        this.props.history.replace('/');
                     }}> <b>Please Shop <i className="fa fa-caret-right" aria-hidden="true"></i></b> </button>
                 </div>
             )
@@ -102,7 +101,7 @@ class Payment extends Component{
                                 <h6>{element.Product.Description}</h6>    
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                <h6>₹{element.Product.Price.substring(1)}</h6>
+                                <h6>₹{element.Product.Price}</h6>
                             </div>
                             <div className="col-4 col-sm-4 itemtab linemid">
                                 <button className="dec" onClick={()=>{
@@ -114,7 +113,7 @@ class Payment extends Component{
                                 }}>+</button>
                             </div>
                             <div className="col-2 col-sm-2 itemtab linemid">
-                                    <h6>₹{parseInt(element.value) * parseInt(element.Product.Price.substring(1))}</h6>
+                                    <h6>₹{parseInt(element.value) * parseInt(element.Product.Price)}</h6>
                             </div>
                             </div>
                         )

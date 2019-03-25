@@ -43,15 +43,17 @@ class UserOrders extends Component {
 
         query.once('value', snapshot => {
           let that = this;
-          Object.keys(snapshot.val()).forEach(orderId => {
-            let orderRef = firebase.database().ref(`userOrder/${user.uid}/${orderId}`);
-            let fn = orderRef.on('child_changed', snapshot => {
-              if (snapshot.val() !== 'Placed')
-                updateStatus(user.uid, orderId, snapshot.val(), that);
+          if(snapshot.val()) {
+            Object.keys(snapshot.val()).forEach(orderId => {
+              let orderRef = firebase.database().ref(`userOrder/${user.uid}/${orderId}`);
+              let fn = orderRef.on('child_changed', snapshot => {
+                if (snapshot.val() !== 'Placed')
+                  updateStatus(user.uid, orderId, snapshot.val(), that);
+              });
+              let handleRef = { orderId, fn };
+              this.setState({ handles: this.state.handles.concat(handleRef) });
             });
-            let handleRef = { orderId, fn };
-            this.setState({ handles: this.state.handles.concat(handleRef) });
-          });
+          }
         });
       } else {
         this.props.history.replace('/')
@@ -79,16 +81,16 @@ class UserOrders extends Component {
       list = orders.map(order => {
         let date = new Date(order.placedOn);
         return (
-          <div class="card col-8 mb-3" key={order.orderId}>
-            <h5 class="card-header">Order ID {order.orderId}</h5>
-            <div class="card-body">
-              <h5 class="card-title">Order Summary</h5>
-              <p class="card-text">
+          <div className="card col-8 mb-3" key={order.orderId}>
+            <h5 className="card-header">Order ID {order.orderId}</h5>
+            <div className="card-body">
+              <h5 className="card-title">Order Summary</h5>
+              <p className="card-text">
                 <span className="d-block text-center">Placed On - {date.toUTCString()}</span>
                 <span className="d-block text-center">Status - {order.status}</span>
                 <span className="d-block text-center">Total Amount - {order.total}</span>
               </p>
-              <a href="#" class="btn btn-primary">Complete Details</a>
+              <a href="#" className="btn btn-primary">Complete Details</a>
             </div>
           </div>
         );
