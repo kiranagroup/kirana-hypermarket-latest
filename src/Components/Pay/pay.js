@@ -429,7 +429,7 @@ class Pay extends Component{
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body" style={{'max-height': 'calc(100vh - 210px)', 'overflow-y': 'auto'}}>
+                        <div className="modal-body" style={{'maxHeight': 'calc(100vh - 210px)', 'overflowY': 'auto'}}>
                         {currentModal}
                         <br/>
                         <p className="error">{this.error}</p>

@@ -39,7 +39,9 @@ class Product extends Component{
         else {
             var show = <h4 className="centerIt mbott">That's all, Thank You.</h4>;
         }
+                    console.log(this.props.counter+' '+this.countCheck+' '+this.props.items);
         return(
+
             <div className="row">
                 {this.props.items.map(Obj=>{
                     if(this.countCheck===this.props.counter){

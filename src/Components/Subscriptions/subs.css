@@ -21,7 +21,7 @@ div.box{
 
 div.box.prod{
     height: 100%;
-    padding: 0 3% !important;
+    padding: 3% 3% 0 !important;
 }
 
 div.textbox p{

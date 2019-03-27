@@ -48,6 +48,7 @@ class Pane extends Component{
     }
 
     render(){
+        console.log(this.props.category);
     	if(!this.state.reqProcessing){console.log(this.state.reqResponse)}
 	    return(
 	        <div style={{textAlign:'center',border:'1px solid rgba(0,0,0,0.75)',borderRadius:'5px',padding:'2.5% 5%'}}>

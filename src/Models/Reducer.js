@@ -12,7 +12,8 @@ const initState = {
     filter: [],
     applied: false,
 	filtercount: null,
-	user: null
+	user: null,
+    currProduct: null
 };
 
 export const Reducer = (state=initState,action) =>{
@@ -219,6 +220,10 @@ export const Reducer = (state=initState,action) =>{
         else{
             state={...state,'pane':'found'};
         }
+        return {...state};
+    }
+    else if(action.type=='changeProduct'){
+        state={...state,'currProduct':action.payLoad};
         return {...state};
     }
 

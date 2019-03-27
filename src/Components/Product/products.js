@@ -23,40 +23,57 @@ class Products extends Component{
         this.gotError=false;
         this.error="";
         this.products=[];
-        // this.count=50;
-        this.state={'count':50}
+        this.state={'count':50};
+        this.current='';
+        this.cat='';
+        this.changed=true;
     }
     checkCategory(){
         switch(this.props.match.params.category){
             case 'kitchenneeds':
+                this.cat='kitchenneeds';
                 this.category='Kitchen Needs';
                 break;
             case 'breadsbakery':
+                this.cat='breadsbakery';
                 this.category='Breads & Dairy';
                 break;
             case 'snacks':
+                this.cat='kitchenneeds';
                 this.category='Snacks & branded foods';
                 break;
             case 'beverages':
+                this.cat='beverages';
                 this.category='Beverages';
                 break;
             case 'personalcare':
+                this.cat='personalcare';
                 this.category='Personal Care';
                 break;
             case 'homecare':
+                this.cat='homecare';
                 this.category='Home Care & Stationary';
                 break;
             case 'babycare':
+                this.cat='babycare';
                 this.category='Baby Care';
                 break;
             case 'miscellaneus':
+                this.cat='miscellaneus';
                 this.category='Miscellaneus';
                 break;
         }
     }
     componentDidMount(){
+        // console.log('mound');
+        this.getProds();
+    }
+    getProds(){
+        console.log('get prods');
         this.checkCategory(this.props.match.params.category);
+        console.log("categeory is "+this.category);
         fetch('https://products-55187.firebaseio.com/products.json').then(response=>response.json().then(data=>{
+            this.products=[];
             Object.keys(data).forEach(element => {
                 if(this.category===data[element].Cluster){
                     this.products.push(data[element]);
@@ -66,6 +83,7 @@ class Products extends Component{
                 this.gotData=true;
                 this.gotError=false;
                 this.error='';
+                this.setState({'count':50});
             }
             else{
                 this.gotError=true;
@@ -76,6 +94,29 @@ class Products extends Component{
     ).catch(err=>console.log(err));
     }
     render(){
+        console.log('render called');
+        if(this.props.current){
+            if(this.current!=this.props.current){
+                this.current=this.props.current;
+                this.changed=true;
+            }
+        }
+        // console.log(this.current+' '+this.cat+' '+JSON.stringify(this.products));
+        // if(this.current==this.cat && this.changed){
+        //     return null;
+        // }
+        // else{
+
+            
+            if(this.current && this.changed){
+                // this.current=this.cat;
+                this.changed=false;
+                // this.setState({'count':50});
+                this.getProds();
+
+            }
+        // }
+        // console.log(this.state.count+'getting rerendered'+JSON.stringify(this.products));
         while(!this.gotData && !this.gotError){
             return(
                 <div className="container centerIt">
@@ -97,7 +138,7 @@ class Products extends Component{
         </div>
         }
         else{
-            var show = <h4 className="centerIt mbott">That's all, Thank You.</h4>;
+            var show = <h4 className="centerIt mbott"></h4>;
         }
         let items;
         if(!this.props.applied && !this.props.filterCount)
@@ -122,10 +163,12 @@ class Products extends Component{
 }
 
 const mapStateToProps=(state)=>{
-    if(state.Reducer.pane || state.Reducer.applied){
+    console.log('called');
+    if(state.Reducer.pane || state.Reducer.applied || state.Reducer.currProduct){
         console.log(state.Reducer.filtercount)
         var pane=state.Reducer.pane;
-        return { 'class': pane, applied: state.Reducer.applied, filter: state.Reducer.filter, filterCount: state.Reducer.filtercount};
+        var curr = state.Reducer.currProduct;
+        return { 'current':curr,'class': pane, applied: state.Reducer.applied, filter: state.Reducer.filter, filterCount: state.Reducer.filtercount};
     }
     return {}
 }

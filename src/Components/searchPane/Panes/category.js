@@ -15,10 +15,6 @@ class Category extends Component{
         // this.brand=[];
         this.currentShow=4;
         this.cat=[];
-        this.state={
-            reqProcessing: true,
-            reqResponse: {}
-        }
     }
 
     esClient = new elasticsearch.Client({
@@ -27,26 +23,15 @@ class Category extends Component{
         log: 'error'
     });
 
-    componentWillMount(){
-        this.requestCollections(this.esClient);
-    }
+    // componentWillMount(){
+    //     this.requestCollections(this.esClient);
+    // }
 
     requestCollections = () =>{
         this.esClient.search({index: 'website', body: reqCollectionQueryBody})
-        .then(results => {
-            console.log(results);
-            this.setState({reqResponse: results, reqProcessing: false})
-        })
-        .catch(err => {console.log(err);})
-    }
-    
-    componentDidMount(){
-        this.requestCollections(this.esClient);
-        fetch('https://raw.githubusercontent.com/kiranagroup/CartWebsite/master/src/assets/completeResponseFrom_requestCollection')
-        .then(response=>{
-            response.json()
-            .then(data=>{
-                this.got=true;
+        .then(data => {
+            console.log(data);
+            this.got=true;
                 for(let i=0;i<data.aggregations.by_cluster.buckets.length;i++){
                     if(data.aggregations.by_cluster.buckets[i].key==this.props.category){
                         this.category=data.aggregations.by_cluster.buckets[i].by_category.buckets;
@@ -56,12 +41,13 @@ class Category extends Component{
                     }
                 }
                 this.setState({});
-            })
-            .catch(err=>
-                console.log(err))})
-        .catch(err=>
-                console.log(err));
+        })
+        .catch(err => {console.log(err);})
     }
+    
+    // componentDidMount(){
+    //     this.requestCollections();
+    // }
     changeCount(){
         this.currentShow=(this.currentShow==this.category.length)?4:this.category.length;
         this.setState({});
@@ -74,6 +60,7 @@ class Category extends Component{
         this.props.filterToggle();
     }
     render(){
+        this.requestCollections();
         while(!this.got){
             return(
                 <img src={require('../../../images/paneloader.gif')} alt="Loading.." className="paneload"/>
@@ -92,6 +79,7 @@ class Category extends Component{
                     if(index>this.currentShow){
                         return;
                     }
+                    console.log(element);
                     return(
                         <div key={element.key}>
                             <p className={this.props.categories.indexOf(element.key)==-1?'pane':'selected pane'} onClick={

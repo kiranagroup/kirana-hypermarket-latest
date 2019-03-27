@@ -3,6 +3,9 @@ import './panes.css';
 import '../../../../node_modules/font-awesome/css/font-awesome.min.css';
 import {connect} from 'react-redux';
 import {Store} from '../../../Models/Store';
+import elasticsearch from 'elasticsearch';
+import {reqCollectionQueryBody, searchPaneQueryBody} from '../../../assets/functions';
+import {elasticconfig} from '../../../assets/service-act.js'
 
 class Brand extends Component{
     constructor(){
@@ -12,12 +15,16 @@ class Brand extends Component{
         this.currentShow=4;
         // this.bran=[];
     }
-    componentDidMount(){
-        fetch('https://raw.githubusercontent.com/kiranagroup/CartWebsite/master/src/assets/completeResponseFrom_requestCollection')
-        .then(response=>{
-            response.json()
-            .then(data=>{
-                this.got=true;
+    esClient = new elasticsearch.Client({
+        host: elasticconfig.host,
+        httpAuth: elasticconfig.httpAuth,
+        log: 'error'
+    });
+    requestCollections = () =>{
+        this.esClient.search({index: 'website', body: reqCollectionQueryBody})
+        .then(data => {
+            console.log(data);
+            this.got=true;
                 for(let i=0;i<data.aggregations.by_cluster.buckets.length;i++){
                     if(data.aggregations.by_cluster.buckets[i].key==this.props.category){
                         this.brand=data.aggregations.by_cluster.buckets[i].by_brand.buckets;
@@ -27,12 +34,12 @@ class Brand extends Component{
                     }
                 }
                 this.setState({});
-            })
-            .catch(err=>
-                console.log(err))})
-        .catch(err=>
-                console.log(err));
+        })
+        .catch(err => {console.log(err);})
     }
+    // componentDidMount(){
+    //     this.requestCollections();
+    // }
     changeCount(){
         this.currentShow=(this.currentShow==this.brand.length)?4:this.brand.length;
         this.setState({});
@@ -45,6 +52,7 @@ class Brand extends Component{
         this.props.filterToggle();
     }
     render(){
+                this.requestCollections();
         while(!this.got){
             return(
                 <img src={require('../../../images/paneloader.gif')} alt="Loading.." className="paneload"/>
