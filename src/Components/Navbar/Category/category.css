@@ -10,11 +10,30 @@ nav a.navbar-brand{
 }
 
 nav a.navbar-brand img{
-    width: 30%;
+    width: 3vw;
+    cursor: pointer;
+}
+
+nav div.dropdown-menu{
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+nav div.dropdown-menu::-webkit-scrollbar {
+    width: 7.5px;
+}
+
+nav div.dropdown-menu::-webkit-scrollbar-track {
+    background: white; 
+}
+
+nav div.dropdown-menu::-webkit-scrollbar-thumb {
+    background: #6A00FF; 
 }
 
 nav li a{
     color: white !important;
+    cursor:pointer;
 }
 
 nav li a.dropdown-item{
@@ -27,4 +46,24 @@ nav .active{
 
 nav .dropdown-menu{
     margin-top:  0 !important;
+}
+
+nav p.more.pane.navcat{
+    text-align: center;
+    font-size: 20px;
+}
+
+nav .dropdown-toggle::after{
+    display: none !important;
+}
+
+nav p.navcattext{
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+nav a.dropdown-toggle{
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
 }

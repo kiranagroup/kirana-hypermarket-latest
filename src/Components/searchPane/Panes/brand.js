@@ -33,6 +33,7 @@ class Brand extends Component{
                         }
                     }
                 }
+                Store.dispatch({'type':'changePrev'});
                 this.setState({});
         })
         .catch(err => {console.log(err);})
@@ -51,8 +52,27 @@ class Brand extends Component{
         this.editBrand(element.key);
         this.props.filterToggle();
     }
+    componentDidMount(){
+        this.requestCollections();
+    }
+    TitleCase(str){
+        return str.replace(
+            /\w\S*/g,
+            function(txt) {
+                return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+            }
+        );
+    }
     render(){
+        if(this.props.currProd){
+            var currentLocation = window.location.href.split('product/')[1];
+            if(currentLocation.includes('#')){
+                currentLocation=currentLocation.split('#')[0];
+            }
+            if(this.props.currProd!=currentLocation){
                 this.requestCollections();
+            }
+        }
         while(!this.got){
             return(
                 <img src={require('../../../images/paneloader.gif')} alt="Loading.." className="paneload"/>
@@ -75,7 +95,7 @@ class Brand extends Component{
                         <div key={element.key}>
                             <p onClick={
                                 this.toggleFilter.bind(this,element)
-                            } className={this.props.brands.indexOf(element.key)==-1?'pane':'selected pane'}>{element.key}</p>
+                            } className={this.props.brands.indexOf(element.key)==-1?'pane':'selected pane'}>{this.TitleCase(element.key)}</p>
                         </div>
                     )
                 })}
@@ -88,8 +108,9 @@ class Brand extends Component{
 const mapStateToProps = (state)=>{
     if(state.Reducer.brands){
         let brand = state.Reducer.brands;
-        let current = state.Reducer.bcount; 
-        return{brands:brand,bcount:current}
+        let current = state.Reducer.bcount;
+        let currProd = state.Reducer.prevProduct 
+        return{brands:brand,bcount:current,currProd:currProd};
     }
     return {brands:[]}
 }

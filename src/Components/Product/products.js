@@ -74,6 +74,8 @@ class Products extends Component{
         console.log("categeory is "+this.category);
         fetch('https://products-55187.firebaseio.com/products.json').then(response=>response.json().then(data=>{
             this.products=[];
+            // this.gotData=false;
+            // this.setState({});
             Object.keys(data).forEach(element => {
                 if(this.category===data[element].Cluster){
                     this.products.push(data[element]);

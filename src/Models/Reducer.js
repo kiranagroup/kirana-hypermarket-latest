@@ -13,7 +13,8 @@ const initState = {
     applied: false,
 	filtercount: null,
 	user: null,
-    currProduct: null
+    currProduct: null,
+    prevProduct: null
 };
 
 export const Reducer = (state=initState,action) =>{
@@ -223,7 +224,12 @@ export const Reducer = (state=initState,action) =>{
         return {...state};
     }
     else if(action.type=='changeProduct'){
+        state.prevProduct=state.currProduct;
         state={...state,'currProduct':action.payLoad};
+        return {...state};
+    }
+    else if(action.type=='changePrev'){
+        state={...state,'prevProduct':state.currProduct};
         return {...state};
     }
 
