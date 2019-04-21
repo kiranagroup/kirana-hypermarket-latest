@@ -30,6 +30,10 @@ class Pay extends Component{
     selectAddress(addr){
         let address = {...this.props.user.address[addr], id:addr};
         this.setState({...this.state, selectedAddr: address});
+        Store.dispatch({
+            type: 'set_address',
+            payLoad: address
+        });
     }
 
     hideError(){

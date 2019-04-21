@@ -75,7 +75,7 @@ class Navbar extends Component{
                     <h6>Sample Text</h6>
                 </div>
                 <div className="col-sm-0 col-2">
-                        <i class="fa fa-bars" onClick={()=>{
+                        <i className="fa fa-bars" onClick={()=>{
                             Store.dispatch({'type':'hidepane'})
                         }} aria-hidden="true"></i>
                 </div>
