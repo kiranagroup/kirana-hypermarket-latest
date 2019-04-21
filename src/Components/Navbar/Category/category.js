@@ -146,10 +146,10 @@ class Category extends Component{
                             <a class="nav-link dropdown-toggle" onClick={this.changeSection.bind(this)} id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" myvalue="miscellaneus" aria-expanded="false" onMouseEnter={()=>{document.querySelector('.dropdown-menu.misc').classList.add('show')}} onMouseLeave={()=>{document.querySelector('.dropdown-menu.misc').classList.remove('show')}}>
                             Miscellaneous
                             </a>
-                            <div class="dropdown-menu misc" aria-labelledby="navbarDropdownMenuLink"  onMouseEnter={()=>{document.querySelector('.dropdown-menu.misc').classList.add('show')}} onMouseLeave={()=>{document.querySelector('.dropdown-menu.misc').classList.remove('show')}}>
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                            <div className="dropdown-menu misc" aria-labelledby="navbarDropdownMenuLink"  onMouseEnter={()=>{document.querySelector('.dropdown-menu.misc').classList.add('show')}} onMouseLeave={()=>{document.querySelector('.dropdown-menu.misc').classList.remove('show')}}>
+                                <a className="dropdown-item" href="#">Action</a>
+                                <a className="dropdown-item" href="#">Another action</a>
+                                <a className="dropdown-item" href="#">Something else here</a>
                             </div>
                         </li>
                     </ul>

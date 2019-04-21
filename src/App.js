@@ -23,7 +23,6 @@ class App extends Component {
       if (user) {
         console.log("User info is", user);
         firebase.database().ref(`/users/${user.uid}`).on('value', snapshot => {
-          console.log(snapshot.val());
           let payload = {
             uid: user.uid,
             ...snapshot.val()

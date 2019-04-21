@@ -5,6 +5,8 @@ import Collection from '../Collection/collection';
 import Products from '../Product/products';
 import SearchRes from '../SearchRes/SearchRes';
 import Payment from '../Pay/payment';
+import UserOrders from '../Orders/userOrders';
+import ShopOrders from '../Orders/shopOrders';
 import {Route,Switch,Redirect} from 'react-router-dom';
 import Pay from '../Pay/pay';
 import './home.css';
@@ -30,8 +32,9 @@ export const Home = () =>{
           <Route path="/product/:category" exact 
         component={Products}></Route>
         <Route path="/payment" component={Payment}></Route>
-          <Route path="/search/q:query/:type?" exact component={SearchRes}></Route>
-          
+        <Route path="/search/q:query/:type?" exact component={SearchRes}></Route>
+        <Route path="/user/orders" component={UserOrders}></Route>
+        <Route path="/shop/orders" component={ShopOrders}></Route>  
 
 
            { <Route render={()=><h1>NO PAGE EXIST </h1>}/> }
